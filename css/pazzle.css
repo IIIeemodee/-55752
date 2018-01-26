@@ -1,0 +1,14 @@
+* {
+	margin:0; padding:0;
+}
+
+#main { 
+	margin: 0 auto;
+	width: 647px;
+}
+
+.puzzlify-wrapper {
+	border: 2px dotted brown;
+	cursor: pointer;
+	background: url('../img/pazzle/hearts_promocode.jpg') center center;
+}
