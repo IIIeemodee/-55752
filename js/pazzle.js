@@ -36,6 +36,7 @@
                 $('<div>', { class: 'puzzlify-item' })
                     .css('background-position', -(box.x) * row + "px " + -(box.y) * col + "px")
                     .data('index', $('.puzzlify-item').size())
+                    .attr('draggable', "true")
                     .appendTo('.puzzlify-wrapper');
             }
         }
@@ -76,7 +77,8 @@
 
 
         // Styling
-        var _styles = "\n        .puzzlify-wrapper {\n          font-size: 0;\n          display: inline-block;\n        }\n        .puzzlify-item {\n          display: inline-block;\n          box-sizing: border-box;\n          outline: " + _options.outline + ";\n        }\n        .puzzlify-item.p1 {\n          box-shadow: inset 0 0 0 3px " + _options.colorStart + ";\n        }\n  \n        .puzzlify-item.p2 {\n          box-shadow: inset 0 0 0 3px " + _options.colorEnd + ";\n        }\n      ";
+        // var _styles = "\n        .puzzlify-wrapper {\n          font-size: 0;\n          display: inline-block;\n        }\n        .puzzlify-item {\n          display: inline-block;\n          box-sizing: border-box;\n          outline: " + _options.outline + ";\n        }\n        .puzzlify-item.p1 {\n          box-shadow: inset 0 0 0 3px " + _options.colorStart + ";\n        }\n  \n        .puzzlify-item.p2 {\n          box-shadow: inset 0 0 0 3px " + _options.colorEnd + ";\n        }\n      ";
+        var _styles = "\n        .puzzlify-wrapper {\n          font-size: 0;\n          display: inline-block;\n        }\n        .puzzlify-item {\n          display: inline-block;\n          box-sizing: border-box;\n          outline: " + _options.outline;
         $('<style>', {
             type: 'text/css',
             text: _styles
@@ -85,47 +87,88 @@
         return this.each(function() {
             var that = this;
             var clicks = 0;
+            // let drag = false;
+            let block = null;
 
             // Wrap image.
             $(this).wrap('<div>').parent().addClass('puzzlify-wrapper');
             create(_options.row, _options.col, this.src, this.clientWidth, this.clientHeight);
             shuffle();
 
-            $('.puzzlify-wrapper').on('touchstart click', '.puzzlify-item', function (event) {
+            // $('.puzzlify-wrapper').on('touchstart click', '.puzzlify-item', function (event) {
 
-                event.stopPropagation();
-                event.preventDefault();
+            //     event.stopPropagation();
+            //     event.preventDefault();
 
+            //     var _this = this;
+            //     $puzzles = $('.puzzlify-item');
+            //     if (!(clicks++ % 2)) {
+            //         $(this).addClass('p1');
+            //     }
+            //     else {
+            //         $(this).addClass('p2');
+            //         setTimeout(function () {
+            //             var p1 = $('.p1');
+            //             var p2 = $(_this);
+            //             var next = p1.next();
+            //             var prev = p1.prev();
+            //             p1.insertAfter(p2);
+
+            //             next.length ? p2.insertBefore(next) : prev.hasClass('p2') ? prev.insertAfter(p1) : p2.insertAfter(prev);
+
+            //             $puzzles.removeClass('p1 p2');
+            //             var right = 0;
+            //             var puzzles = $puzzles.toArray();
+            //             puzzles.forEach(function (puzzle) {
+            //                 var $puzzle = $(puzzle);
+            //                 if ($puzzle.index() - 1 === $puzzle.data('index'))
+            //                     right += 1;
+            //             });
+            //             if (right === _options.MAX) {
+            //                 _options.onSuccess();
+            //             }
+            //         }, _options.timeout);
+
+            //     }
+            // });
+
+            $('.puzzlify-wrapper').on('dragstart', '.puzzlify-item', function (event) {
                 var _this = this;
+                $(_this).addClass('p1');
+                // drag = true;
+            });
+
+            $('.puzzlify-wrapper').on('dragenter', '.puzzlify-item', function (event) {
+                var _this = this;
+                block = _this;
+            });
+
+            $('.puzzlify-wrapper').on('dragend', '.puzzlify-item', function (event) {
+                // drag = false;
+                $(block).addClass('p2');
                 $puzzles = $('.puzzlify-item');
-                if (!(clicks++ % 2)) {
-                    $(this).addClass('p1');
-                }
-                else {
-                    $(this).addClass('p2');
-                    setTimeout(function () {
-                        var p1 = $('.p1');
-                        var p2 = $(_this);
-                        var next = p1.next();
-                        var prev = p1.prev();
-                        p1.insertAfter(p2);
 
-                        next.length ? p2.insertBefore(next) : prev.hasClass('p2') ? prev.insertAfter(p1) : p2.insertAfter(prev);
+                setTimeout(function () {
+                    var p1 = $('.p1');
+                    var p2 = $(block);
+                    var next = p1.next();
+                    var prev = p1.prev();
+                    p1.insertAfter(p2);
 
-                        $puzzles.removeClass('p1 p2');
-                        var right = 0;
-                        var puzzles = $puzzles.toArray();
-                        puzzles.forEach(function (puzzle) {
-                            var $puzzle = $(puzzle);
-                            if ($puzzle.index() - 1 === $puzzle.data('index'))
-                                right += 1;
-                        });
-                        if (right === _options.MAX) {
-                            _options.onSuccess();
-                        }
-                    }, _options.timeout);
+                    next.length ? p2.insertBefore(next) : prev.hasClass('p2') ? prev.insertAfter(p1) : p2.insertAfter(prev);
 
-                }
+                    $puzzles.removeClass('p1 p2');
+                    var right = 0;
+                    var puzzles = $puzzles.toArray();
+                    puzzles.forEach(function (puzzle) {
+                        var $puzzle = $(puzzle);
+                        if ($puzzle.index() - 1 === $puzzle.data('index'))
+                            right += 1;
+                    });
+                    if (right === _options.MAX) {
+                        _options.onSuccess();
+                    }
+                }, _options.timeout);
             });
 
             // Hide image
