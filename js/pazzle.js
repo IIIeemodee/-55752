@@ -132,18 +132,18 @@
             //     }
             // });
 
-            $('.puzzlify-wrapper').on('dragstart', '.puzzlify-item', function (event) {
+            $('.puzzlify-wrapper').on('dragstart touchstart', '.puzzlify-item', function (event) {
                 var _this = this;
                 $(_this).addClass('p1');
                 // drag = true;
             });
 
-            $('.puzzlify-wrapper').on('dragenter', '.puzzlify-item', function (event) {
+            $('.puzzlify-wrapper').on('dragenter touchmove', '.puzzlify-item', function (event) {
                 var _this = this;
                 block = _this;
             });
 
-            $('.puzzlify-wrapper').on('dragend', '.puzzlify-item', function (event) {
+            $('.puzzlify-wrapper').on('dragend touchend', '.puzzlify-item', function (event) {
                 // drag = false;
                 $(block).addClass('p2');
                 $puzzles = $('.puzzlify-item');
