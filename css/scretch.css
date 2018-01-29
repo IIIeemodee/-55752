@@ -2,12 +2,12 @@
 	margin:0; padding:0;
 }
 
-#main { 
+.main { 
 	margin:0 auto;
 	width:647px;
 }
 
-#maincanvas {
+.maincanvas {
 	border: 0px solid #222;
 	cursor: pointer;
 	margin: 0 auto;
