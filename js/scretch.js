@@ -1,7 +1,14 @@
 (function() {
 
+    function getRandomInt(min, max){
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
     var image = { // back and front images
-        'back': { 'url':'img/scretch/hearts_back.jpg', 'img':null },
+        'back': { 
+            'url': 'img/scretch/hearts_back-' + getRandomInt(1, 6) + '.jpg',
+            'img': null 
+        },
         'front': { 'url':'img/scretch/hearts_front.jpg', 'img':null }
     };
     
@@ -208,13 +215,13 @@
     /**
      * Set up the DOM when loading is complete
      */
-    function loadingComplete() {
-        var loading = document.getElementById('loading');
-        var main = document.getElementById('main');
-    
+    // function loadingComplete() {
+        // var loading = document.getElementById('loading'); 
         // loading.className = 'hidden';
-        main.className = '';
-    }
+
+        // var main = document.getElementById('main');
+        // main.className = '';
+    // }
     
     /**
      * Handle loading of needed image resources
@@ -229,7 +236,7 @@
     
             if (loadCount >= loadTotal) {
                 setupCanvases();
-                loadingComplete();
+                // loadingComplete();
             }
         }
     
