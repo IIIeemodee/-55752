@@ -2,20 +2,6 @@
 	margin:0; padding:0;
 }
 
-/* .cell {
-	display: table-cell;
-	vertical-align: middle;
-	text-align: center;
-}
-
-.cell canvas {
-	vertical-align: middle;
-}
-
-.canthumb {
-	border: 0px solid #222;
-} */
-
 #main { 
 	margin:0 auto;
 	width:647px;
@@ -24,11 +10,24 @@
 #maincanvas {
 	border: 0px solid #222;
 	cursor: pointer;
-	margin:0 auto;
+	margin: 0 auto;
+	/* z-index: 1; */
 }
 
 .scretch {
+	position: relative;
 	margin-bottom: 50px;
-	border: 2px dotted brown;
+	/* border: 2px dotted brown; */
+}
+
+.promo {
+	position: absolute;
+	display: inline-block;
+	top: 18%;
+	left: 7%;
+	font-size: 1.4em;
+	color: #fdeded;
+	z-index: 0;
+	margin-top: 50px;
 }
   

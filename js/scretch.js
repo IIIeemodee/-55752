@@ -70,7 +70,7 @@
         var main = document.getElementById('maincanvas');
         var tempctx = canvas.temp.getContext('2d');
         var mainctx = main.getContext('2d');
-    
+        
         // Step 1: clear the temp
         canvas.temp.width = canvas.temp.width; // resizing clears
     
@@ -91,7 +91,14 @@
     
         // Step 3: stamp the background on the temp (!! source-atop mode !!)
         tempctx.globalCompositeOperation = 'source-atop';
+
         tempctx.drawImage(image.back.img, 0, 0);
+
+        // mainctx.font = "66px";
+        // mainctx.fillStyle = "#0F0";
+        // mainctx.strokeStyle = "#F00";
+        // mainctx.font = "italic 16pt Arial";
+        // mainctx.fillText("4516321612", 20, 50);
     
         // Step 4: stamp the foreground on the display canvas (source-over)
         mainctx.drawImage(image.front.img, 0, 0);
@@ -232,7 +239,7 @@
             
     
         for (k in image) if (image.hasOwnProperty(k)) {
-            image[k].img = document.createElement('img'); // image is global
+            image[k].img = document.createElement('img');
             image[k].img.addEventListener('load', imageLoaded, false);
             image[k].img.src = image[k].url;
         }
